@@ -1,0 +1,148 @@
+type: collection.insomnia.rest/5.0
+schema_version: "5.1"
+name: S1_R3_R4
+meta:
+  id: wrk_546a5a4b36e04edab2fe73df45957060
+  created: 1774888196739
+  modified: 1774888196739
+  description: ""
+collection:
+  - name: Clientes
+    meta:
+      id: fld_6cb8dd69be544a31b8002cd9e9ca440a
+      created: 1775491828017
+      modified: 1775491828017
+      sortKey: -1775491828017
+      description: ""
+    children:
+      - url: http://localhost:8080/cliente?id=1
+        name: AtualizarClientes
+        meta:
+          id: req_10cb32e21cf44e6da1fc0dc4c41d9dad
+          created: 1775491844253
+          modified: 1775494540067
+          isPrivate: false
+          description: ""
+          sortKey: -1775491844253
+        method: PUT
+        body:
+          mimeType: application/json
+          text: |-
+            {
+              "nome": "Ramom Atualizado",
+              "cpf": "12345678901"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/12.4.0
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8080/cliente/1
+        name: DeletarClientes
+        meta:
+          id: req_7aca446826f64aef8aa394bcb57a8330
+          created: 1775491850981
+          modified: 1775494567467
+          isPrivate: false
+          description: ""
+          sortKey: -1775491850981
+        method: DELETE
+        headers:
+          - name: User-Agent
+            value: insomnia/12.4.0
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8080/cliente
+        name: ListarClientes
+        meta:
+          id: req_577a972f3bb94f269447898c509289eb
+          created: 1775491854062
+          modified: 1775494424135
+          isPrivate: false
+          description: ""
+          sortKey: -1775491854062
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/12.4.0
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8080/cliente
+        name: CriarClientes
+        meta:
+          id: req_922377561af3445599b02e93d1419ad6
+          created: 1775491858273
+          modified: 1775494335285
+          isPrivate: false
+          description: ""
+          sortKey: -1775491858273
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+              "nome": "João Silva",
+              "cpf": "12345678900",
+              "enderecos": [
+                {
+                  "cep": "01001000",
+                  "numero": "123",
+                  "complemento": "Apto 10"
+                }
+              ],
+              "telefones": ["11999999999", "11888888888"]
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/12.4.0
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+cookieJar:
+  name: Default Jar
+  meta:
+    id: jar_9237413050e3a7364a36a831544154f6c2d5b61b
+    created: 1774888196764
+    modified: 1774888196764
+environments:
+  name: Base Environment
+  meta:
+    id: env_9237413050e3a7364a36a831544154f6c2d5b61b
+    created: 1774888196752
+    modified: 1774888196752
+    isPrivate: false

@@ -1,0 +1,238 @@
+type: collection.insomnia.rest/5.0
+schema_version: "5.1"
+name: S1_R3_R4
+meta:
+  id: wrk_546a5a4b36e04edab2fe73df45957060
+  created: 1774888196739
+  modified: 1774888196739
+  description: ""
+collection:
+  - url: http://localhost:8080/categoria
+    name: Listar
+    meta:
+      id: req_b229561a0e0241feadf8d020dbf904ab
+      created: 1774888235842
+      modified: 1774891705574
+      isPrivate: false
+      description: ""
+      sortKey: -1774888235842
+    method: GET
+    body:
+      mimeType: application/json
+      text: |-
+        {
+          "nome": "Teclado",
+          "descricao": "Produtos eletrônicos"
+        }
+    headers:
+      - name: Content-Type
+        value: application/json
+      - name: User-Agent
+        value: insomnia/12.3.1
+        description: ""
+        disabled: false
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: http://localhost:8080/categoria
+    name: Criar
+    meta:
+      id: req_192ea9030dd244e4a355f904351d9a71
+      created: 1774889971630
+      modified: 1774891699604
+      isPrivate: false
+      description: ""
+      sortKey: -1774889971630
+    method: POST
+    body:
+      mimeType: application/json
+      text: |-
+        {
+          "nome": "Computador Gamer",
+          "descricao": "Placa de video: 5090, 32gb de ram e ryzen 9 9900"
+        }
+    headers:
+      - name: Content-Type
+        value: application/json
+      - name: User-Agent
+        value: insomnia/12.3.1
+        description: ""
+        disabled: false
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: http://localhost:8080/categoria/1
+    name: Deletar
+    meta:
+      id: req_299a248c48c740418a905631cd27c7e0
+      created: 1774891613977
+      modified: 1774891713856
+      isPrivate: false
+      description: ""
+      sortKey: -1774891613977
+    method: DELETE
+    headers:
+      - name: User-Agent
+        value: insomnia/12.4.0
+        description: ""
+        disabled: false
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: http://localhost:8080/categoria/
+    name: atualizar
+    meta:
+      id: req_e65afde9a7374606867f5ab41c8ad89b
+      created: 1774892039462
+      modified: 1774892431530
+      isPrivate: false
+      description: ""
+      sortKey: -1774892039462
+    method: PUT
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"nome": "Computador Gamer",
+        	"descricao": "Placa de video: 6090, 64gb de ram e ryzen 5 5700 "
+        }
+    parameters:
+      - name: id
+        value: "2"
+        description: ""
+        disabled: false
+    headers:
+      - name: Content-Type
+        value: application/json
+      - name: User-Agent
+        value: insomnia/12.4.0
+        description: ""
+        disabled: false
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: http://localhost:8080/produto
+    name: ListarProdutos
+    meta:
+      id: req_2c1242d035e4424f92e947ae43cce3a9
+      created: 1774894841220
+      modified: 1774895003757
+      isPrivate: false
+      description: ""
+      sortKey: -1774894841220
+    method: GET
+    headers:
+      - name: User-Agent
+        value: insomnia/12.4.0
+        description: ""
+        disabled: false
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: http://localhost:8080/produto
+    name: CriarProdutos
+    meta:
+      id: req_4844e9cd64794f38aa952eb6b75e3081
+      created: 1774894853865
+      modified: 1774896750627
+      isPrivate: false
+      description: ""
+      sortKey: -1774894853865
+    method: POST
+    body:
+      mimeType: multipart/form-data
+      params:
+        - name: imagem
+          value: ""
+          description: ""
+          disabled: false
+          fileName: C:\Users\49197597899\Pictures\ram.webp
+          type: file
+        - name: IdCategoria
+          value: "2"
+          description: ""
+          disabled: false
+        - name: Nome
+          value: 32GB ram
+          description: ""
+          disabled: false
+        - name: Valor
+          value: 3000,00
+          description: ""
+          disabled: false
+    headers:
+      - name: Content-Type
+        value: multipart/form-data
+      - name: User-Agent
+        value: insomnia/12.4.0
+        description: ""
+        disabled: false
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: http://localhost:8080/produto/3
+    name: DeletarProdutos
+    meta:
+      id: req_4da7c43c91d94991a458d5f60aa13972
+      created: 1774894869924
+      modified: 1774896791643
+      isPrivate: false
+      description: ""
+      sortKey: -1774894869924
+    method: DELETE
+    headers:
+      - name: User-Agent
+        value: insomnia/12.4.0
+        description: ""
+        disabled: false
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+cookieJar:
+  name: Default Jar
+  meta:
+    id: jar_9237413050e3a7364a36a831544154f6c2d5b61b
+    created: 1774888196764
+    modified: 1774888196764
+environments:
+  name: Base Environment
+  meta:
+    id: env_9237413050e3a7364a36a831544154f6c2d5b61b
+    created: 1774888196752
+    modified: 1774888196752
+    isPrivate: false
