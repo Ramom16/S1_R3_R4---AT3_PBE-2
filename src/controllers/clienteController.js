@@ -23,11 +23,11 @@ const clienteController = {
         try {
             const { nome, cpf, enderecos, telefones } = req.body;
 
-            if (!nome || typeof nome !== 'string' || nome.trim().length < 3) {
+            if (!nome || typeof nome !== 'string' || nome.trim().length < 3) { // o trim vai ser utilizado para remover os espaços em branco e o length vai verificar se o nome tem pelo menos 3 caracteres
                 return res.status(400).json({ error: 'Nome inválido.' });
             }
 
-            if (!cpf || !/^\d{11}$/.test(cpf)) {
+            if (!cpf || !/^\d{11}$/.test(cpf)) { // verificação do cpf com expressão regular
                 return res.status(400).json({ error: 'CPF inválido.' });
             }
 
@@ -36,7 +36,7 @@ const clienteController = {
             if (enderecos && Array.isArray(enderecos)) {
                 for (const end of enderecos) {
 
-                    if (!end.cep || !/^\d{8}$/.test(end.cep)) {
+                    if (!end.cep || !/^\d{8}$/.test(end.cep)) { // verificação do cep com a mesma expressão regular do cpf, mas com 8 dígitos
                         return res.status(400).json({ error: 'CEP inválido.' });
                     }
 
@@ -65,7 +65,7 @@ const clienteController = {
 
                     const numero = typeof tel === 'string' ? tel : tel.telefone;
 
-                    if (!numero || !/^\d{10,15}$/.test(numero)) {
+                    if (!numero || !/^\d{10,15}$/.test(numero)) { // verificação do telefone com expressão regular, permitindo de 10 a 15 dígitos (considerando DDD e número)
                         return res.status(400).json({ error: 'Telefone inválido.' });
                     }
 
