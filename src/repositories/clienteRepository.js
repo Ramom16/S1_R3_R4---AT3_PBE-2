@@ -1,70 +1,71 @@
 import { connection } from "../configs/Database.js";
 
 const clienteRepository = {
-
   criar: async (cliente) => {
+    const conn = await connection.getConnection();
 
-    const sqlCliente = "INSERT INTO cliente (nome, cpf) VALUES (?, ?)";
-    const valuesCliente = [
-      cliente.nome || null,
-      cliente.cpf || null
-    ];
+    try {
+      await conn.beginTransaction();
 
-    const [resultCliente] = await connection.execute(sqlCliente, valuesCliente);
-    const clienteId = resultCliente.insertId;
+      const sqlCli = "INSERT INTO cliente (nome, cpf) VALUES (?, ?)";
 
-    if (cliente.enderecos && cliente.enderecos.length > 0) {
-      for (const endereco of cliente.enderecos) {
+      const valuesCli = [cliente.nome, cliente.cpf];
 
-        const sqlEndereco = `
-          INSERT INTO Endereco 
-          (idClientes, cep, logradouro, numero, complemento, bairro, cidade, estado) 
-          VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-        `;
+      const [rowsCli] = await conn.execute(sqlCli, valuesCli);
 
-        const valuesEndereco = [
-          clienteId,
-          endereco.cep || null,
-          endereco.logradouro || null,
-          endereco.numero || null,
-          endereco.complemento || null,
-          endereco.bairro || null,
-          endereco.cidade || null,
-          endereco.estado || null
-        ];
+      const clienteId = rowsCli.insertId;
 
-        await connection.execute(sqlEndereco, valuesEndereco);
+      if (cliente.telefones && cliente.telefones.length > 0) {
+        for (const telefone of cliente.telefones) {
+          const sqlTel = `
+            INSERT INTO telefone (idClientes, telefone)
+            VALUES (?, ?)
+          `;
+
+          const valuesTel = [clienteId, telefone.numero || null];
+
+          await conn.execute(sqlTel, valuesTel);
+        }
       }
-    }
 
-    if (cliente.telefones && cliente.telefones.length > 0) {
-      for (const telefone of cliente.telefones) {
+      if (cliente.enderecos && cliente.enderecos.length > 0) {
+        for (const endereco of cliente.enderecos) {
+          const sqlEnd = `
+            INSERT INTO Endereco 
+            (idClientes, cep, logradouro, numero, complemento, bairro, cidade, estado)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+          `;
 
-        const sqlTelefone = `
-          INSERT INTO telefone (idClientes, telefone) 
-          VALUES (?, ?)
-        `;
+          const valuesEnd = [
+            clienteId,
+            endereco.cep || null,
+            endereco.logradouro || null,
+            endereco.numero,
+            endereco.complemento || null,
+            endereco.bairro || null,
+            endereco.cidade || null,
+            endereco.estado || null,
+          ];
 
-        const valuesTelefone = [
-          clienteId,
-          telefone || null 
-        ];
-
-        await connection.execute(sqlTelefone, valuesTelefone);
+          await conn.execute(sqlEnd, valuesEnd);
+        }
       }
-    }
 
-    return resultCliente;
+      await conn.commit();
+
+      return clienteId;
+    } catch (error) {
+      await conn.rollback();
+      throw error;
+    } finally {
+      conn.release();
+    }
   },
 
   editar: async (cliente) => {
     const sql = "UPDATE cliente SET nome = ?, cpf = ? WHERE idCliente = ?";
-    
-    const values = [
-      cliente.nome || null,
-      cliente.cpf || null,
-      cliente.id
-    ];
+
+    const values = [cliente.nome, cliente.cpf, cliente.id];
 
     const [rows] = await connection.execute(sql, values);
     return rows;
@@ -75,49 +76,44 @@ const clienteRepository = {
     const [clientes] = await connection.execute(sqlCliente);
 
     for (const cliente of clientes) {
+      const [enderecos] = await connection.execute(
+        "SELECT * FROM Endereco WHERE idClientes = ?",
+        [cliente.idCliente],
+      );
 
-      const sqlEndereco = "SELECT * FROM Endereco WHERE idClientes = ?";
-      const [enderecos] = await connection.execute(sqlEndereco, [
-        cliente.idCliente,
-      ]);
-      cliente.enderecos = enderecos;
+      cliente.enderecos = enderecos.map((e) => ({
+        cep: e.cep,
+        logradouro: e.logradouro,
+        numero: e.numero,
+        complemento: e.complemento,
+        bairro: e.bairro,
+        cidade: e.cidade,
+        estado: e.estado,
+      }));
 
-      const sqlTelefone = "SELECT * FROM telefone WHERE idClientes = ?";
-      const [telefones] = await connection.execute(sqlTelefone, [
-        cliente.idCliente,
-      ]);
-      cliente.telefones = telefones;
+      const [telefones] = await connection.execute(
+        "SELECT * FROM telefone WHERE idClientes = ?",
+        [cliente.idCliente],
+      );
+
+      cliente.telefones = telefones.map((t) => ({
+        numero: t.telefone,
+      }));
     }
 
     return clientes;
   },
 
   deletar: async (id) => {
-    const sql = "DELETE FROM cliente WHERE idCliente = ?";
-    const values = [id];
+    await connection.execute("DELETE FROM telefone WHERE idClientes = ?", [id]);
 
-    const [rows] = await connection.execute(sql, values);
+    await connection.execute("DELETE FROM Endereco WHERE idClientes = ?", [id]);
+
+    const sql = "DELETE FROM cliente WHERE idCliente = ?";
+    const [rows] = await connection.execute(sql, [id]);
+
     return rows;
   },
-
-  selecionarPorId: async (id) => {
-    const sqlCliente = "SELECT * FROM cliente WHERE idCliente = ?";
-    const [clientes] = await connection.execute(sqlCliente, [id]);
-
-    if (clientes.length === 0) return [];
-
-    const cliente = clientes[0];
-
-    const sqlEndereco = "SELECT * FROM Endereco WHERE idClientes = ?";
-    const [enderecos] = await connection.execute(sqlEndereco, [id]);
-    cliente.enderecos = enderecos;
-
-    const sqlTelefone = "SELECT * FROM telefone WHERE idClientes = ?";
-    const [telefones] = await connection.execute(sqlTelefone, [id]);
-    cliente.telefones = telefones;
-
-    return [cliente];
-  }
 };
 
 export default clienteRepository;

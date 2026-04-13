@@ -1,0 +1,164 @@
+type: collection.insomnia.rest/5.0
+schema_version: "5.1"
+name: S1_R3_R4
+meta:
+  id: wrk_546a5a4b36e04edab2fe73df45957060
+  created: 1774888196739
+  modified: 1774888196739
+  description: ""
+collection:
+  - name: Clientes
+    meta:
+      id: fld_6cb8dd69be544a31b8002cd9e9ca440a
+      created: 1775491828017
+      modified: 1775491828017
+      sortKey: -1775491828017
+      description: ""
+  - name: Clientes2
+    meta:
+      id: fld_382da1df74eb47a5b1e7c7c299b24462
+      created: 1776085172388
+      modified: 1776085172388
+      sortKey: -1776085172388
+      description: ""
+    children:
+      - url: http://localhost:8080/cliente
+        name: AtualizarClientes
+        meta:
+          id: req_d0cc1ea65cef4f22acdb61e6793ed07c
+          created: 1776085181836
+          modified: 1776099143029
+          isPrivate: false
+          description: ""
+          sortKey: -1776085181836
+        method: PUT
+        body:
+          mimeType: application/json
+          text: |-
+            {
+              "nome": "Luisa",
+              "cpf": "92548014703"
+            }
+        parameters:
+          - name: id
+            value: "17"
+            description: ""
+            disabled: false
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/12.5.0
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8080/cliente/2
+        name: DeletarClientes
+        meta:
+          id: req_6f25795a9c4f4edbaee32f1f5092d776
+          created: 1776085185125
+          modified: 1776097048432
+          isPrivate: false
+          description: ""
+          sortKey: -1776085185125
+        method: DELETE
+        headers:
+          - name: User-Agent
+            value: insomnia/12.5.0
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8080/cliente
+        name: ListarClientes
+        meta:
+          id: req_179507b66e2d4b419fba0616247f8d54
+          created: 1776085187011
+          modified: 1776087536974
+          isPrivate: false
+          description: ""
+          sortKey: -1776085187011
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/12.5.0
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8080/cliente
+        name: CriarClientes
+        meta:
+          id: req_022e85f28ea24bc8b07992b46e482b04
+          created: 1776085188389
+          modified: 1776097450579
+          isPrivate: false
+          description: ""
+          sortKey: -1776085188389
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+              "nome": "Ramom",
+              "cpf": "33977686755",
+              "enderecos": [
+                {
+                  "cep": "26087440",
+            			"logradouro": "Rua Gentil",
+                  "numero": "78",
+                  "complemento": "Casa",
+            			"bairro": "Austin",
+            			"cidade": "Nova Iguaçu",
+            			"estado": "RJ"
+                }
+              ],
+              "telefones": ["11750073697"]
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/12.5.0
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+cookieJar:
+  name: Default Jar
+  meta:
+    id: jar_9237413050e3a7364a36a831544154f6c2d5b61b
+    created: 1774888196764
+    modified: 1774888196764
+environments:
+  name: Base Environment
+  meta:
+    id: env_9237413050e3a7364a36a831544154f6c2d5b61b
+    created: 1774888196752
+    modified: 1774888196752
+    isPrivate: false

@@ -1,3 +1,6 @@
+import { Telefone } from "./Telefone.js";
+import { Endereco } from "./Endereco.js";
+
 export class Cliente {
   #id;
   #nome;
@@ -6,11 +9,30 @@ export class Cliente {
   #enderecos;
   #telefones;
 
-  constructor(pNome, pCpf, pEnderecos, pTelefones, pId) {
+  constructor(pNome, pCpf, pEnderecos = [], pTelefones = [], pId) {
     this.nome = pNome;
     this.cpf = pCpf;
-    this.enderecos = pEnderecos;
-    this.telefones = pTelefones;
+
+    this.enderecos = pEnderecos.map(e =>
+      e instanceof Endereco
+        ? e
+        : new Endereco(
+            e.cep,
+            e.logradouro,
+            e.numero,
+            e.complemento,
+            e.bairro,
+            e.cidade,
+            e.estado
+          )
+    );
+
+    this.telefones = pTelefones.map(t =>
+      t instanceof Telefone
+        ? t
+        : new Telefone(t.numero)
+    );
+
     this.id = pId;
     this.#dataCad = new Date();
   }
@@ -36,10 +58,6 @@ export class Cliente {
   set id(value) {
     this.#validarId(value);
     this.#id = value;
-  }
-
-  set dataCad(value) {
-    this.#dataCad = value;
   }
 
   get nome() {
@@ -69,7 +87,7 @@ export class Cliente {
   #validarNome(value) {
     if (!value || value.trim().length < 3 || value.trim().length > 255) {
       throw new Error(
-        "O campo nome é obrigatório e deve conter entre 3 e 255 caracteres.",
+        "O campo nome é obrigatório e deve conter entre 3 e 255 caracteres."
       );
     }
   }
@@ -77,23 +95,7 @@ export class Cliente {
   #validarCpf(value) {
     if (!value || !/^\d{11}$/.test(value)) {
       throw new Error(
-        "O campo CPF é obrigatório e deve conter exatamente 11 dígitos.",
-      );
-    }
-  }
-
-  #validarCep(value) {
-    if (!value || !/^\d{8}$/.test(value)) {
-      throw new Error(
-        "O campo CEP é obrigatório e deve conter exatamente 8 dígitos.",
-      );
-    }
-  }
-
-  #validarTelefone(value) {
-    if (!value || !/^\d{10,15}$/.test(value)) {
-      throw new Error(
-        "O campo telefone é obrigatório e deve conter entre 10 e 15 dígitos.",
+        "O campo CPF é obrigatório e deve conter exatamente 11 dígitos."
       );
     }
   }
@@ -104,31 +106,13 @@ export class Cliente {
     }
   }
 
-  // Métodos públicos para validação
-  validarNome(value) {
-    this.#validarNome(value);
-  }
-
-  validarCpf(value) {
-    this.#validarCpf(value);
-  }
-
-  validarCep(value) {
-    this.#validarCep(value);
-  }
-
-  validarTelefone(value) {
-    this.#validarTelefone(value);
-  }
-
-  // Design Pattern: Factory
   static criar(dados) {
     return new Cliente(
       dados.nome,
       dados.cpf,
       dados.enderecos || [],
       dados.telefones || [],
-      null,
+      null
     );
   }
 
@@ -138,7 +122,7 @@ export class Cliente {
       dados.cpf,
       dados.enderecos || [],
       dados.telefones || [],
-      id,
+      id
     );
   }
 }
